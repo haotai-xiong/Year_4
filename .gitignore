@@ -12,8 +12,8 @@
 
 # Ignore Visual Studio specific files
 **/.vs/
-**/*.vcxproj
-**/*.vcxproj.filters
+#**/*.vcxproj
+#**/*.vcxproj.filters
 **/*.suo
 **/*.user
 
