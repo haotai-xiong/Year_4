@@ -1,32 +1,30 @@
-# Prerequisites
-*.d
+# Ignore object files and binaries
+**/*.o
+**/*.exe
+**/*.dll
+**/*.so
+**/*.dylib
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Ignore build directories
+**/build/
+**/Debug/
+**/Release/
 
-# Precompiled Headers
-*.gch
-*.pch
+# Ignore Visual Studio specific files
+**/.vs/
+**/*.vcxproj
+**/*.vcxproj.filters
+**/*.suo
+**/*.user
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Ignore Xcode specific files
+**/*.xcodeproj
+**/*.xcworkspace
+**/*.xcuserstate
 
-# Fortran module files
-*.mod
-*.smod
+# Ignore Mac OS specific files
+**/.DS_Store
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+# You may also want to ignore the folder where you keep your SFML library files
+# if they are within your project directory. Replace 'SFML_PATH' with the actual path.
+SFML_PATH/

@@ -43,6 +43,8 @@ public:
 		// t_window.draw(m_shape);
 	}
 
+	sf::Vector2f& getPos() { return m_curPos; }
+
 private:
 
 	void setupSprite()

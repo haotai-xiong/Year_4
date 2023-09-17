@@ -1,4 +1,26 @@
 ﻿  Game.cpp
+D:\Desktop\Haotai_Xiong\SETU_Carlow_Campus\Year_4\AI_for_Games\Lab1&2a\Lab1&2a\Enemy.h(20,58): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Desktop\Haotai_Xiong\SETU_Carlow_Campus\Year_4\AI_for_Games\Lab1&2a\Lab1&2a\Enemy.h(20,43): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Desktop\Haotai_Xiong\SETU_Carlow_Campus\Year_4\AI_for_Games\Lab1&2a\Lab1&2a\Enemy.h(40,28): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   main.cpp
+D:\Desktop\Haotai_Xiong\SETU_Carlow_Campus\Year_4\AI_for_Games\Lab1&2a\Lab1&2a\Enemy.h(20,58): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Desktop\Haotai_Xiong\SETU_Carlow_Campus\Year_4\AI_for_Games\Lab1&2a\Lab1&2a\Enemy.h(20,43): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+D:\Desktop\Haotai_Xiong\SETU_Carlow_Campus\Year_4\AI_for_Games\Lab1&2a\Lab1&2a\Enemy.h(40,28): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   Generating Code...
-  Lab1&2a.vcxproj -> C:\Users\labuser\Desktop\C00265675-Year4\AI_for_Games\Lab1&2a\x64\Debug\Lab1&2a.exe
+  Lab1&2a.vcxproj -> D:\Desktop\Haotai_Xiong\SETU_Carlow_Campus\Year_4\AI_for_Games\Lab1&2a\x64\Debug\Lab1&2a.exe

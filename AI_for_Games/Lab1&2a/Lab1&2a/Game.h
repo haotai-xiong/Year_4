@@ -37,6 +37,8 @@ private:
 	// object init
 	Player m_player;
 	Enemy m_enemy;
+	Enemy m_wander;
+	Enemy m_seeker;
 
 };
 
