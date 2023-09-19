@@ -40,5 +40,14 @@
     <Image Include="Purple.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Dead.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Slide.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Walk.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

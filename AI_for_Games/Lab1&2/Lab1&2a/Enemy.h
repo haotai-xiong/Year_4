@@ -14,28 +14,23 @@ class Enemy
 {
 public:
 	Enemy() {
-		setupSprite();
-
-		// init pos
-		m_kinematic.m_pos = sf::Vector2f(rand() % 1920, rand() % 1080);
-		m_enemySprite.setPosition(m_kinematic.m_pos);
-
-		// init velocity
-		m_kinematic.m_velocity = sf::Vector2f(static_cast <float> (rand()) / static_cast<float>(RAND_MAX) - static_cast<float>(rand()) / static_cast <float>(RAND_MAX)
-			, static_cast<float>(rand()) / static_cast <float>(RAND_MAX) - static_cast<float>(rand()) / static_cast <float>(RAND_MAX));
+		init();
 	}
 
-	void update(sf::Time t_deltaTime) {
+	virtual void update(sf::Time t_deltaTime) {
 		m_kinematic.m_pos += m_kinematic.m_velocity;
 		m_enemySprite.setPosition(m_kinematic.m_pos);
 	}
 
-	void render(sf::RenderWindow& t_window)	{
+	virtual void render(sf::RenderWindow& t_window)	{
+		m_enemySprite.setRotation(m_kinematic.m_orientation);
 		t_window.draw(m_enemySprite);
 		checkBound(t_window);
 	}
 
-	void wander() {
+	/*
+	virtual void wander(sf::Vector2f& t_pos) {
+		/*
 		static sf::Clock wanderClock;
 		static float wanderAngle = rand() % 360;
 
@@ -55,10 +50,12 @@ public:
 
 		float speedMultiplier = 0.5f;
 		m_kinematic.m_velocity *= speedMultiplier;
+		}
 	}
+	*/
 
-	void seek(sf::Vector2f& t_pos)
-	{
+	virtual void seek(sf::Vector2f& t_pos) {
+		/*
 		sf::Vector2f toTarget = t_pos - m_kinematic.m_pos;
 		float distanceToTarget = sqrtf(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
 		sf::Vector2f desiredVelocity = toTarget / distanceToTarget;
@@ -73,20 +70,24 @@ public:
 
 		// Scale the velocity to the calculated speed
 		m_kinematic.m_velocity = desiredVelocity * speed;
+		*/
 	}
+	
 
-	void flee(sf::Vector2f t_pos)
-	{
+	
+	virtual void flee(sf::Vector2f t_pos) {
+		/*
 		sf::Vector2f awayFromTarget = m_kinematic.m_pos - t_pos;
 		float distanceToTarget = sqrt(awayFromTarget.x * awayFromTarget.x + awayFromTarget.y * awayFromTarget.y);
 		sf::Vector2f desiredVelocity = awayFromTarget / distanceToTarget;
 		float maxFleeSpeed = 0.5f;
 		m_kinematic.m_velocity = desiredVelocity * maxFleeSpeed;
+		*/
 	}
 
-private:
+protected:
 
-	void setupSprite() {
+	virtual void init() {
 		m_enemyTexture.loadFromFile("Purple.png");
 		m_enemyTexture.setSmooth(true);
 		m_enemySprite.setTexture(m_enemyTexture);
@@ -113,12 +114,64 @@ private:
 		}
 	}
 
+	virtual float getNewOrientation(float m_currentOrientation, sf::Vector2f& m_velocity)
+	{
+		if (std::abs(m_velocity.x) > 0 || std::abs(m_velocity.y) > 0)
+		{
+			return std::atan2(m_velocity.y, m_velocity.x) / 3.1415926535 * 180.0f;
+		}
+		else
+		{
+			return m_currentOrientation;
+		}
+	}
+
 	Kinematic m_kinematic;
 
 	sf::Texture m_enemyTexture; // texture used for sfml logo
 	sf::Sprite m_enemySprite; // sprite used for sfml logo
 	// sf::Vector2f m_curPos; // current position of player
 	// sf::Vector2f m_velocity;
+
+	float m_maxRotation = 10.0f;
+	float m_maxSpeed = 1.0f;
 };
 
-#endif // !ENEMY_HPP
+class Wanderer : public Enemy {
+
+public:
+	Wanderer() {
+		init();
+	}
+
+	virtual void wander(sf::Vector2f& t_pos) {
+		static sf::Clock wanderClock;
+		static float wanderAngle = rand() % 360;
+
+		if (wanderClock.getElapsedTime().asSeconds() >= 2.0f) {
+			m_kinematic.m_velocity = t_pos - m_kinematic.m_pos;
+			m_kinematic.m_velocity /= sqrt(m_kinematic.m_velocity.x * m_kinematic.m_velocity.x
+				+ m_kinematic.m_velocity.y * m_kinematic.m_velocity.y);
+			m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
+
+			float randomRotation = (static_cast<float>(rand()) / RAND_MAX) * 2.0f - 1.0f;
+			m_kinematic.m_orientation += m_maxRotation * randomRotation;
+
+			m_kinematic.m_velocity = sf::Vector2f(-sin(m_kinematic.m_orientation), cos(m_kinematic.m_orientation)) * m_maxSpeed;
+			// std::cout << "wander velocity: " << m_kinematic.m_velocity.x << " " << m_kinematic.m_velocity.y << std::endl;
+		
+			wanderClock.restart();
+		}
+	}
+
+protected:
+	virtual void init() {
+		m_enemyTexture.loadFromFile("Walk.png");
+		m_enemyTexture.setSmooth(true);
+		m_enemySprite.setTexture(m_enemyTexture);
+	}
+
+};
+
+#endif 
+// !ENEMY_HPP

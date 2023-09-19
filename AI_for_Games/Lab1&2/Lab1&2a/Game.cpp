@@ -94,13 +94,13 @@ void Game::update(sf::Time t_deltaTime)
 
 	m_player.update(t_deltaTime);
 
-	m_enemy.flee(m_player.getPos());
+	//m_enemy.flee(m_player.getPos());
 	m_enemy.update(t_deltaTime);
 
-	m_wander.wander();
+	m_wander.wander(m_player.getPos());
 	m_wander.update(t_deltaTime);
 
-	m_seeker.seek(m_player.getPos());
+	//m_seeker.seek(m_player.getPos());
 	m_seeker.update(t_deltaTime);
 }
 
