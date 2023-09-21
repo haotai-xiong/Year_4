@@ -1,29 +1,29 @@
 # Ignore object files and binaries
-**/*.o
-**/*.exe
-**/*.dll
-**/*.so
-**/*.dylib
+*.o
+*.exe
+*.dll
+*.so
+*.dylib
 
 # Ignore build directories
-**/build/
-**/Debug/
-**/Release/
+build/
+Debug/
+Release/
 
 # Ignore Visual Studio specific files
-**/.vs/
+.vs/
 #**/*.vcxproj
 #**/*.vcxproj.filters
-**/*.suo
-**/*.user
+*.suo
+*.user
 
 # Ignore Xcode specific files
-**/*.xcodeproj
-**/*.xcworkspace
-**/*.xcuserstate
+*.xcodeproj
+*.xcworkspace
+*.xcuserstate
 
 # Ignore Mac OS specific files
-**/.DS_Store
+.DS_Store
 
 # You may also want to ignore the folder where you keep your SFML library files
 # if they are within your project directory. Replace 'SFML_PATH' with the actual path.

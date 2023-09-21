@@ -36,9 +36,11 @@ private:
 
 	// object init
 	Player m_player;
-	Enemy m_enemy;
+	// Enemy m_enemy;
 	Wanderer m_wander;
-	Enemy m_seeker;
+	Seeker m_seeker;
+	Seeker m_arriver;
+	Fleer m_fleer;
 
 };
 

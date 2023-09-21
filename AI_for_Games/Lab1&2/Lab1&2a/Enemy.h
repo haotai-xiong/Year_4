@@ -28,63 +28,6 @@ public:
 		checkBound(t_window);
 	}
 
-	/*
-	virtual void wander(sf::Vector2f& t_pos) {
-		/*
-		static sf::Clock wanderClock;
-		static float wanderAngle = rand() % 360;
-
-		if (wanderClock.getElapsedTime().asSeconds() >= 1.0f) {
-			float angleChange = (rand() % 21 - 10) * (3.1415926575f / 180.0f);
-			wanderAngle += angleChange * 100.0f;
-			if (wanderAngle < 0) wanderAngle += 360;
-			if (wanderAngle > 360) wanderAngle -= 360;
-
-			std::cout << "wanderAngle: " << wanderAngle << std::endl;
-
-			wanderClock.restart();
-		}
-
-		float radianAngle = wanderAngle * 3.1415926575f / 180.0f;
-		m_kinematic.m_velocity = sf::Vector2f(cos(radianAngle), sin(radianAngle));
-
-		float speedMultiplier = 0.5f;
-		m_kinematic.m_velocity *= speedMultiplier;
-		}
-	}
-	*/
-
-	virtual void seek(sf::Vector2f& t_pos) {
-		/*
-		sf::Vector2f toTarget = t_pos - m_kinematic.m_pos;
-		float distanceToTarget = sqrtf(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
-		sf::Vector2f desiredVelocity = toTarget / distanceToTarget;
-		float maxSpeed = 1.0f;
-		float slowingRadius = 100.0f;
-
-		float speed = maxSpeed;
-		if (distanceToTarget < slowingRadius)
-		{
-			speed = maxSpeed * (distanceToTarget / slowingRadius);
-		}
-
-		// Scale the velocity to the calculated speed
-		m_kinematic.m_velocity = desiredVelocity * speed;
-		*/
-	}
-	
-
-	
-	virtual void flee(sf::Vector2f t_pos) {
-		/*
-		sf::Vector2f awayFromTarget = m_kinematic.m_pos - t_pos;
-		float distanceToTarget = sqrt(awayFromTarget.x * awayFromTarget.x + awayFromTarget.y * awayFromTarget.y);
-		sf::Vector2f desiredVelocity = awayFromTarget / distanceToTarget;
-		float maxFleeSpeed = 0.5f;
-		m_kinematic.m_velocity = desiredVelocity * maxFleeSpeed;
-		*/
-	}
-
 protected:
 
 	virtual void init() {
@@ -135,6 +78,7 @@ protected:
 
 	float m_maxRotation = 10.0f;
 	float m_maxSpeed = 1.0f;
+	sf::Vector2f desiredVelocity;
 };
 
 class Wanderer : public Enemy {
@@ -169,8 +113,88 @@ protected:
 		m_enemyTexture.loadFromFile("Walk.png");
 		m_enemyTexture.setSmooth(true);
 		m_enemySprite.setTexture(m_enemyTexture);
+
+		int x = rand() % 1921; // Range [0, 1920]
+		int y = rand() % 1081; // Range [0, 1080]
+		m_kinematic.m_pos = sf::Vector2f(static_cast<float>(x), static_cast<float>(y));
 	}
 
+};
+
+class Seeker : public Enemy {
+
+public:
+	Seeker() {
+		init();
+	}
+
+	void seek(sf::Vector2f& t_pos) {
+		toTarget = t_pos - m_kinematic.m_pos;
+		distanceToTarget = sqrtf(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
+		desiredVelocity = toTarget / distanceToTarget;
+
+		// Scale the velocity to the calculated speed
+		m_kinematic.m_velocity = desiredVelocity * m_maxSpeed;
+	}
+
+	void arrive(sf::Vector2f& t_pos) {
+		toTarget = t_pos - m_kinematic.m_pos;
+		distanceToTarget = sqrtf(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
+		desiredVelocity = toTarget / distanceToTarget;
+
+		float slowingRadius = 200.0f;
+
+		float speedLimit = m_maxSpeed;
+		if (distanceToTarget < slowingRadius)
+		{
+			speedLimit = m_maxSpeed * (distanceToTarget / slowingRadius);
+		}
+
+		// Scale the velocity to the calculated speed
+		m_kinematic.m_velocity = desiredVelocity * speedLimit;
+	}
+
+protected:
+	virtual void init() {
+		m_enemyTexture.loadFromFile("Slide.png");
+		m_enemyTexture.setSmooth(true);
+		m_enemySprite.setTexture(m_enemyTexture);
+
+		int x = rand() % 1921; // Range [0, 1920]
+		int y = rand() % 1081; // Range [0, 1080]
+		m_kinematic.m_pos = sf::Vector2f(static_cast<float>(x), static_cast<float>(y));
+	}
+
+	// float m_maxSpeed = 1.0f;
+
+	sf::Vector2f toTarget;
+	float distanceToTarget = 0.0f;
+};
+
+class Fleer : public Enemy {
+public:
+	Fleer() {
+		init();
+	}
+
+	void flee(sf::Vector2f& t_pos) {
+		sf::Vector2f awayFromTarget = m_kinematic.m_pos - t_pos;
+		float distanceToTarget = sqrt(awayFromTarget.x * awayFromTarget.x + awayFromTarget.y * awayFromTarget.y);
+		sf::Vector2f desiredVelocity = awayFromTarget / distanceToTarget;
+		float maxFleeSpeed = 0.5f;
+		m_kinematic.m_velocity = desiredVelocity * maxFleeSpeed;
+	}
+
+protected:
+	virtual void init() {
+		m_enemyTexture.loadFromFile("Dead.png");
+		m_enemyTexture.setSmooth(true);
+		m_enemySprite.setTexture(m_enemyTexture);
+
+		int x = rand() % 1921; // Range [0, 1920]
+		int y = rand() % 1081; // Range [0, 1080]
+		m_kinematic.m_pos = sf::Vector2f(static_cast<float>(x), static_cast<float>(y));
+	}
 };
 
 #endif 
