@@ -10,6 +10,11 @@ struct Kinematic {
 	float m_rotation;
 };
 
+struct Steering {
+	sf::Vector2f m_linear;
+	float m_angular;
+};
+
 class Enemy
 {
 public:
@@ -23,7 +28,7 @@ public:
 	}
 
 	virtual void render(sf::RenderWindow& t_window)	{
-		m_enemySprite.setRotation(m_kinematic.m_orientation);
+		m_enemySprite.setRotation(getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity));
 		t_window.draw(m_enemySprite);
 		checkBound(t_window);
 	}
@@ -34,6 +39,8 @@ protected:
 		m_enemyTexture.loadFromFile("Purple.png");
 		m_enemyTexture.setSmooth(true);
 		m_enemySprite.setTexture(m_enemyTexture);
+		m_enemySprite.setOrigin(sf::Vector2f(m_enemySprite.getGlobalBounds().width / 2.0f,
+			m_enemySprite.getGlobalBounds().height / 2.0f));
 	}
 
 	void checkBound(sf::RenderWindow& t_window) {
@@ -69,7 +76,18 @@ protected:
 		}
 	}
 
+	virtual void getNewSteering(sf::Vector2f& t_pos)
+	{
+		m_steering.m_linear = t_pos - m_kinematic.m_pos;
+		m_steering.m_linear /= sqrt(m_steering.m_linear.x * m_steering.m_linear.x
+			+ m_steering.m_linear.y * m_steering.m_linear.y);
+		m_steering.m_linear *= m_maxAcceleration;
+
+		m_steering.m_angular = 0.0f;
+	}
+
 	Kinematic m_kinematic;
+	Steering m_steering;
 
 	sf::Texture m_enemyTexture; // texture used for sfml logo
 	sf::Sprite m_enemySprite; // sprite used for sfml logo
@@ -78,6 +96,7 @@ protected:
 
 	float m_maxRotation = 10.0f;
 	float m_maxSpeed = 1.0f;
+	float m_maxAcceleration = 10.0f;
 	sf::Vector2f desiredVelocity;
 };
 
@@ -88,7 +107,7 @@ public:
 		init();
 	}
 
-	virtual void wander(sf::Vector2f& t_pos) {
+	void wander(sf::Vector2f& t_pos) {
 		static sf::Clock wanderClock;
 		static float wanderAngle = rand() % 360;
 
@@ -96,7 +115,7 @@ public:
 			m_kinematic.m_velocity = t_pos - m_kinematic.m_pos;
 			m_kinematic.m_velocity /= sqrt(m_kinematic.m_velocity.x * m_kinematic.m_velocity.x
 				+ m_kinematic.m_velocity.y * m_kinematic.m_velocity.y);
-			m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
+			//m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
 
 			float randomRotation = (static_cast<float>(rand()) / RAND_MAX) * 2.0f - 1.0f;
 			m_kinematic.m_orientation += m_maxRotation * randomRotation;
@@ -113,6 +132,8 @@ protected:
 		m_enemyTexture.loadFromFile("Walk.png");
 		m_enemyTexture.setSmooth(true);
 		m_enemySprite.setTexture(m_enemyTexture);
+		m_enemySprite.setOrigin(sf::Vector2f(m_enemySprite.getGlobalBounds().width / 2.0f,
+			m_enemySprite.getGlobalBounds().height / 2.0f));
 
 		int x = rand() % 1921; // Range [0, 1920]
 		int y = rand() % 1081; // Range [0, 1080]
@@ -129,12 +150,27 @@ public:
 	}
 
 	void seek(sf::Vector2f& t_pos) {
+		/*
 		toTarget = t_pos - m_kinematic.m_pos;
 		distanceToTarget = sqrtf(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
 		desiredVelocity = toTarget / distanceToTarget;
-
-		// Scale the velocity to the calculated speed
 		m_kinematic.m_velocity = desiredVelocity * m_maxSpeed;
+		*/
+		toTarget = t_pos - m_kinematic.m_pos;
+		distanceToTarget = sqrtf(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
+		desiredVelocity = toTarget / distanceToTarget;
+		m_kinematic.m_velocity = desiredVelocity * m_maxSpeed;
+
+		// New steering behavior
+		getNewSteering(t_pos);
+		m_kinematic.m_velocity += m_steering.m_linear;
+
+		// Ensure we're not exceeding the maximum speed
+		float speed = std::sqrt(m_kinematic.m_velocity.x * m_kinematic.m_velocity.x + m_kinematic.m_velocity.y * m_kinematic.m_velocity.y);
+		if (speed > m_maxSpeed) {
+			m_kinematic.m_velocity /= speed; // Normalize velocity
+			m_kinematic.m_velocity *= m_maxSpeed; // Apply max speed
+		}
 	}
 
 	void arrive(sf::Vector2f& t_pos) {
@@ -159,6 +195,8 @@ protected:
 		m_enemyTexture.loadFromFile("Slide.png");
 		m_enemyTexture.setSmooth(true);
 		m_enemySprite.setTexture(m_enemyTexture);
+		m_enemySprite.setOrigin(sf::Vector2f(m_enemySprite.getGlobalBounds().width / 2.0f,
+			m_enemySprite.getGlobalBounds().height / 2.0f));
 
 		int x = rand() % 1921; // Range [0, 1920]
 		int y = rand() % 1081; // Range [0, 1080]
@@ -190,6 +228,8 @@ protected:
 		m_enemyTexture.loadFromFile("Dead.png");
 		m_enemyTexture.setSmooth(true);
 		m_enemySprite.setTexture(m_enemyTexture);
+		m_enemySprite.setOrigin(sf::Vector2f(m_enemySprite.getGlobalBounds().width / 2.0f,
+			m_enemySprite.getGlobalBounds().height / 2.0f));
 
 		int x = rand() % 1921; // Range [0, 1920]
 		int y = rand() % 1081; // Range [0, 1080]

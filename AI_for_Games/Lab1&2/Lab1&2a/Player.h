@@ -54,6 +54,8 @@ private:
 		m_playerTexture.loadFromFile("Blue.png");
 		m_playerTexture.setSmooth(true);
 		m_playerSprite.setTexture(m_playerTexture);
+		m_playerSprite.setOrigin(sf::Vector2f(m_playerSprite.getGlobalBounds().width / 2.0f,
+			m_playerSprite.getGlobalBounds().height / 2.0f));
 
 		/*
 		m_shape.setRadius(25.0f);
