@@ -19,8 +19,8 @@ Game::Game() :
 /// default destructor we didn't dynamically allocate anything
 /// so we don't need to free it, but mthod needs to be here
 /// </summary>
-Game::~Game()
-{
+Game::~Game() {
+
 }
 
 
@@ -31,8 +31,7 @@ Game::~Game()
 /// draw as often as possible but only updates are on time
 /// if updates run slow then don't render frames
 /// </summary>
-void Game::run()
-{	
+void Game::run() {	
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	const float fps{ 60.0f };
@@ -54,8 +53,7 @@ void Game::run()
 /// get key presses/ mouse moves etc. from OS
 /// and user :: Don't do game update here
 /// </summary>
-void Game::processEvents()
-{
+void Game::processEvents() {
 	sf::Event newEvent;
 	while (m_window.pollEvent(newEvent)) {
 		if ( sf::Event::Closed == newEvent.type) // window message
@@ -74,8 +72,7 @@ void Game::processEvents()
 /// deal with key presses from the user
 /// </summary>
 /// <param name="t_event">key press event</param>
-void Game::processKeys(sf::Event t_event)
-{
+void Game::processKeys(sf::Event t_event) {
 	if (sf::Keyboard::Escape == t_event.key.code) {
 		m_exitGame = true;
 	}
@@ -86,40 +83,33 @@ void Game::processKeys(sf::Event t_event)
 /// Update the game world
 /// </summary>
 /// <param name="t_deltaTime">time interval per frame</param>
-void Game::update(sf::Time t_deltaTime)
-{
+void Game::update(sf::Time t_deltaTime) {
 	if (m_exitGame) {
 		m_window.close();
 	}
 
 	m_player.update(t_deltaTime);
 
-	m_wander.wander(m_player.getPos());
-	m_wander.update(t_deltaTime);
-
-	//m_seeker.seek(m_player.getPos());
-	m_seeker.seek(m_player.getPos());
-	m_seeker.update(t_deltaTime);
-	m_arriver.arrive(m_player.getPos());
-	m_arriver.update(t_deltaTime);
-
-	m_fleer.flee(m_player.getPos());
-	m_fleer.update(t_deltaTime);
+	m_wander.update(t_deltaTime, m_player.getPos(), m_player.getKinematic());
+	m_seeker.update(t_deltaTime, m_player.getPos(), m_player.getKinematic());
+	m_arriveSlower.update(t_deltaTime, m_player.getPos(), m_player.getKinematic());
+	m_arriveFaster.update(t_deltaTime, m_player.getPos(), m_player.getKinematic());
+	m_pursuer.update(t_deltaTime, m_player.getPos(), m_player.getKinematic());
 }
 
 /// <summary>
 /// draw the frame and then switch buffers
 /// </summary>
-void Game::render()
-{
+void Game::render() {
 	m_window.clear(sf::Color::Black);
 
 	m_player.render(m_window);
-	//m_enemy.render(m_window);
-	m_wander.render(m_window);
-	m_seeker.render(m_window);
-	m_arriver.render(m_window);
-	m_fleer.render(m_window);
+
+	m_wander.render(m_window, m_player.getPos());
+	m_arriveSlower.render(m_window, m_player.getPos());
+	m_arriveFaster.render(m_window, m_player.getPos());
+	m_seeker.render(m_window, m_player.getPos());
+	m_pursuer.render(m_window, m_player.getPos());
 
 	m_window.display();
 }
@@ -127,13 +117,13 @@ void Game::render()
 /// <summary>
 /// load the font and setup the text message for screen
 /// </summary>
-void Game::setupFontAndText()
-{
+void Game::setupFontAndText() {
+
 }
 
 /// <summary>
 /// load the texture and setup the sprite for the logo
 /// </summary>
-void Game::setupSprite()
-{
+void Game::setupSprite() {
+
 }

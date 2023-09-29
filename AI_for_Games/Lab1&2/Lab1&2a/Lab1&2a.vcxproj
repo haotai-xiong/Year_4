@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Behavior.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
@@ -147,6 +148,9 @@
     <Image Include="Purple.png" />
     <Image Include="Slide.png" />
     <Image Include="Walk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Freedom-10eM.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

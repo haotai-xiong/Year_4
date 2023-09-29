@@ -11,8 +11,7 @@
 #include "Player.h"
 #include "Enemy.h"
 
-class Game
-{
+class Game {
 public:
 	Game();
 	~Game();
@@ -39,8 +38,10 @@ private:
 	// Enemy m_enemy;
 	Wanderer m_wander;
 	Seeker m_seeker;
-	Seeker m_arriver;
-	Fleer m_fleer;
+	ArriveSlower m_arriveSlower;
+	ArriveFaster m_arriveFaster;
+	Pursuer m_pursuer;
+	// Fleer m_fleer;
 
 };
 
