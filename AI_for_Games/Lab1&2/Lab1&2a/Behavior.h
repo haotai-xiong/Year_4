@@ -115,11 +115,11 @@ protected:
 		sf::Vector2f direction = targetPos - t_kinematic.m_pos;
 		float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
-		if (distance < t_steering.m_slowingRadius / 5.0f) {
+		if (distance < t_steering.m_slowingRadius / 4.0f) {
 			t_kinematic.m_velocity = sf::Vector2f(0.1f, 0.1f);
 		}
 		else {
-			t_kinematic.m_velocity = direction * (t_steering.m_maxSpeed / distance);
+			t_kinematic.m_velocity = direction * (t_steering.m_maxSpeed * 2.0f / distance);
 		}
 	}
 
@@ -127,7 +127,6 @@ protected:
 		sf::Vector2f direction = targetKinematic.m_pos - t_kinematic.m_pos;
 		float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 		float speed = std::sqrt(t_kinematic.m_velocity.x * t_kinematic.m_velocity.x + t_kinematic.m_velocity.y * t_kinematic.m_velocity.y);
-
 		float timePrediction;
 		if (speed <= distance / maxTimePrediction) {
 			timePrediction = maxTimePrediction;
@@ -138,9 +137,9 @@ protected:
 
 		// Predict the future position of the target
 		sf::Vector2f futureTargetPos = targetKinematic.m_pos + targetKinematic.m_velocity * timePrediction;
-		sf::Vector2f seekDirection = futureTargetPos - t_kinematic.m_pos;
-		float seekDistance = std::sqrt(seekDirection.x * seekDirection.x + seekDirection.y * seekDirection.y);
-		t_kinematic.m_velocity = seekDirection * (t_steering.m_maxSpeed / seekDistance);
+
+		// Delegate to the seek function
+		seek(t_kinematic, t_steering, futureTargetPos);
 	}
 
 	void getNewSteering(Kinematic& t_kinematic, Steering& t_steering, sf::Vector2f& t_pos) {

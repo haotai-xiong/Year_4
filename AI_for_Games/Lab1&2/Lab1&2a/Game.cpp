@@ -76,6 +76,22 @@ void Game::processKeys(sf::Event t_event) {
 	if (sf::Keyboard::Escape == t_event.key.code) {
 		m_exitGame = true;
 	}
+	if (t_event.key.code == sf::Keyboard::Num1) {
+		m_wander.isActive() ? m_wander.setActive(false) : m_wander.setActive(true);
+		std::cout << "Num1 press detected \n";
+	}
+	if (t_event.key.code == sf::Keyboard::Num2) {
+		m_seeker.isActive() ? m_seeker.setActive(false) : m_seeker.setActive(true);
+	}
+	if (t_event.key.code == sf::Keyboard::Num3) {
+		m_arriveSlower.isActive() ? m_arriveSlower.setActive(false) : m_arriveSlower.setActive(true);
+	}
+	if (t_event.key.code == sf::Keyboard::Num4) {
+		m_arriveFaster.isActive() ? m_arriveFaster.setActive(false) : m_arriveFaster.setActive(true);
+	}
+	if (t_event.key.code == sf::Keyboard::Num5) {
+		m_pursuer.isActive() ? m_pursuer.setActive(false) : m_pursuer.setActive(true);
+	}
 	m_player.processKeys(t_event);
 }
 
@@ -111,6 +127,8 @@ void Game::render() {
 	m_seeker.render(m_window, m_player.getPos());
 	m_pursuer.render(m_window, m_player.getPos());
 
+	m_window.draw(m_instructionText);
+
 	m_window.display();
 }
 
@@ -118,7 +136,11 @@ void Game::render() {
 /// load the font and setup the text message for screen
 /// </summary>
 void Game::setupFontAndText() {
-
+	m_instructionFont.loadFromFile("Freedom-10eM.ttf");
+	m_instructionText.setFont(m_instructionFont);
+	m_instructionText.setCharacterSize(32);
+	m_instructionText.setString("Press Num one to five to either Pause or continue the enemies' movements");
+	m_instructionText.setFillColor(sf::Color::White);
 }
 
 /// <summary>

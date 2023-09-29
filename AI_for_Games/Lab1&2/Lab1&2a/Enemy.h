@@ -34,6 +34,9 @@ public:
 		t_window.draw(m_text);
 	}
 
+	void setActive(bool t) { m_active = t; }
+	bool isActive() { return m_active; }
+
 protected:
 
 	virtual void init() {
@@ -76,38 +79,48 @@ protected:
 		}
 	}
 
-	void drawVisionCone(sf::RenderWindow& t_window, sf::Vector2f& t_pos) {
-			sf::ConvexShape visionCone;
-			visionCone.setPointCount(3);
-			visionCone.setPoint(0, m_kinematic.m_pos);
-			visionCone.setPoint(1, sf::Vector2f(m_kinematic.m_pos.x + std::cos((m_kinematic.m_orientation - m_steering.degree) * PI / 180.0f) * m_steering.m_visionConeLength,
-				m_kinematic.m_pos.y + std::sin((m_kinematic.m_orientation - m_steering.degree) * PI / 180.0f) * m_steering.m_visionConeLength));
-			visionCone.setPoint(2, sf::Vector2f(m_kinematic.m_pos.x + std::cos((m_kinematic.m_orientation + m_steering.degree) * PI / 180.0f) * m_steering.m_visionConeLength,
-				m_kinematic.m_pos.y + std::sin((m_kinematic.m_orientation + m_steering.degree) * PI / 180.0f) * m_steering.m_visionConeLength));
+	void drawVisionCone(sf::RenderWindow& t_window, sf::Vector2f& t_targetPos) {
+		sf::ConvexShape visionCone;
+		visionCone.setPointCount(3);
+		visionCone.setPoint(0, m_kinematic.m_pos);
+		visionCone.setPoint(1, sf::Vector2f(m_kinematic.m_pos.x + std::cos((m_kinematic.m_orientation - m_steering.degree) * PI / 180.0f) * m_steering.m_visionConeLength,
+			m_kinematic.m_pos.y + std::sin((m_kinematic.m_orientation - m_steering.degree) * PI / 180.0f) * m_steering.m_visionConeLength));
+		visionCone.setPoint(2, sf::Vector2f(m_kinematic.m_pos.x + std::cos((m_kinematic.m_orientation + m_steering.degree) * PI / 180.0f) * m_steering.m_visionConeLength,
+			m_kinematic.m_pos.y + std::sin((m_kinematic.m_orientation + m_steering.degree) * PI / 180.0f) * m_steering.m_visionConeLength));
 
-			sf::Vector2f toPlayer = t_pos - m_kinematic.m_pos;
-			float lengthToPlayer = sqrt(toPlayer.x * toPlayer.x + toPlayer.y * toPlayer.y);
-			float angleToPlayer = angleBetweenVectors(m_kinematic.m_pos, t_pos);
+		sf::Vector2f toPlayer = t_targetPos - m_kinematic.m_pos;
+		float lengthToPlayer = std::sqrt(toPlayer.x * toPlayer.x + toPlayer.y * toPlayer.y);
+		float angleToPlayer = angleBetweenVectors(toPlayer, m_kinematic.m_velocity);
 
-			if (angleToPlayer <= m_steering.degree && angleToPlayer >= -m_steering.degree && lengthToPlayer < m_steering.m_visionConeLength) {
-				visionCone.setFillColor(sf::Color(255, 0, 0, 50));
-				std::cout << angleToPlayer << std::endl;
-			}
-			else {
-				visionCone.setFillColor(sf::Color(255, 255, 0, 50));
-			}
+		if (angleToPlayer <= m_steering.degree && angleToPlayer >= -m_steering.degree && lengthToPlayer < m_steering.m_visionConeLength) {
+			visionCone.setFillColor(sf::Color(255, 0, 0, 50));
+		}
+		else {
+			visionCone.setFillColor(sf::Color(255, 255, 0, 50));
+		}
 
-			// Draw the vision cone
-			t_window.draw(visionCone);
+		// Draw the vision cone
+		t_window.draw(visionCone);
 	}
 	
-	float angleBetweenVectors(const sf::Vector2f& vec1, const sf::Vector2f& vec2) {
-			float dotProduct = vec1.x * vec2.x + vec1.y * vec2.y;
-			float magnitude1 = std::sqrt(vec1.x * vec1.x + vec1.y * vec1.y);
-			float magnitude2 = std::sqrt(vec2.x * vec2.x + vec2.y * vec2.y);
-			float angleInRadians = std::acos(dotProduct / (magnitude1 * magnitude2));
-			std::cout << magnitude1 << std::endl;
-			return angleInRadians * 180.0f / PI;
+	float angleBetweenVectors(const sf::Vector2f& t_vec1, const sf::Vector2f& t_vec2) {
+		float m1 = std::sqrt(t_vec1.x * t_vec1.x + t_vec1.y * t_vec1.y);
+		float m2 = std::sqrt(t_vec2.x * t_vec2.x + t_vec2.y * t_vec2.y);
+
+		// Check for zero vectors
+		if (m1 == 0.0f || m2 == 0.0f) return 0.0f;
+
+		sf::Vector2f n1 = t_vec1 / m1;
+		sf::Vector2f n2 = t_vec2 / m2;
+
+		float dotProduct = n1.x * n2.x + n1.y * n2.y;
+		dotProduct = std::min(1.0f, std::max(-1.0f, dotProduct));
+
+		float angleInRadians = std::acos(dotProduct / (m1 * m2));
+
+		//std::cout << "Seek Angles: " << angleInRadians * 180.0f / PI << std::endl;
+
+		return angleInRadians * 180.0f / PI - 90.0f + m_steering.degree;
 	}
 
 	void drawVelocityDirection(sf::RenderWindow& t_window, const sf::Vector2f& t_pos, const sf::Vector2f& t_velocity) {
@@ -128,6 +141,7 @@ protected:
 
 	Kinematic m_kinematic;
 	Steering m_steering;
+	bool m_active;
 
 	sf::Texture m_enemyTexture; // texture used for sfml logo
 	sf::Sprite m_enemySprite; // sprite used for sfml logo
@@ -149,12 +163,14 @@ public:
 	}
 
 	virtual void update(sf::Time t_deltaTime, sf::Vector2f& t_playerPos, Kinematic& t_playerKinematic) {
-		m_behaviorPattern.process(Type::wander, m_kinematic, m_steering, t_playerPos, t_playerKinematic);
+		if (m_active) {
+			m_behaviorPattern.process(Type::wander, m_kinematic, m_steering, t_playerPos, t_playerKinematic);
 
-		m_kinematic.m_velocity += m_steering.m_linear;
-		m_kinematic.m_pos += m_kinematic.m_velocity;
-		m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
-		m_enemySprite.setPosition(m_kinematic.m_pos);
+			m_kinematic.m_velocity += m_steering.m_linear;
+			m_kinematic.m_pos += m_kinematic.m_velocity;
+			m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
+			m_enemySprite.setPosition(m_kinematic.m_pos);
+		}
 	}
 
 protected:
@@ -188,12 +204,14 @@ public:
 	}
 
 	virtual void update(sf::Time t_deltaTime, sf::Vector2f& t_playerPos, Kinematic& t_playerKinematic) {
-		m_behaviorPattern.process(Type::seeker, m_kinematic, m_steering, t_playerPos, t_playerKinematic);
+		if (m_active) {
+			m_behaviorPattern.process(Type::seeker, m_kinematic, m_steering, t_playerPos, t_playerKinematic);
 
-		m_kinematic.m_velocity += m_steering.m_linear;
-		m_kinematic.m_pos += m_kinematic.m_velocity;
-		m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
-		m_enemySprite.setPosition(m_kinematic.m_pos);
+			m_kinematic.m_velocity += m_steering.m_linear;
+			m_kinematic.m_pos += m_kinematic.m_velocity;
+			m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
+			m_enemySprite.setPosition(m_kinematic.m_pos);
+		}
 	}
 
 protected:
@@ -226,12 +244,14 @@ public:
 	}
 
 	virtual void update(sf::Time t_deltaTime, sf::Vector2f& t_playerPos, Kinematic& t_playerKinematic) {
-		m_behaviorPattern.process(Type::arriveSlow, m_kinematic, m_steering, t_playerPos, t_playerKinematic);
+		if (m_active) {
+			m_behaviorPattern.process(Type::arriveSlow, m_kinematic, m_steering, t_playerPos, t_playerKinematic);
 
-		m_kinematic.m_velocity += m_steering.m_linear;
-		m_kinematic.m_pos += m_kinematic.m_velocity;
-		m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
-		m_enemySprite.setPosition(m_kinematic.m_pos);
+			m_kinematic.m_velocity += m_steering.m_linear;
+			m_kinematic.m_pos += m_kinematic.m_velocity;
+			m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
+			m_enemySprite.setPosition(m_kinematic.m_pos);
+		}
 	}
 
 protected:
@@ -260,16 +280,18 @@ protected:
 class ArriveFaster : public Enemy {
 public:
 	ArriveFaster() {
-		init("ArriveSlower");
+		init("ArriveFaster");
 	}
 
 	virtual void update(sf::Time t_deltaTime, sf::Vector2f& t_playerPos, Kinematic& t_playerKinematic) {
-		m_behaviorPattern.process(Type::arriveFast, m_kinematic, m_steering, t_playerPos, t_playerKinematic);
+		if (m_active) {
+			m_behaviorPattern.process(Type::arriveFast, m_kinematic, m_steering, t_playerPos, t_playerKinematic);
 
-		m_kinematic.m_velocity += m_steering.m_linear;
-		m_kinematic.m_pos += m_kinematic.m_velocity;
-		m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
-		m_enemySprite.setPosition(m_kinematic.m_pos);
+			m_kinematic.m_velocity += m_steering.m_linear;
+			m_kinematic.m_pos += m_kinematic.m_velocity;
+			m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
+			m_enemySprite.setPosition(m_kinematic.m_pos);
+		}
 	}
 
 protected:
@@ -302,12 +324,14 @@ public:
 	}
 
 	virtual void update(sf::Time t_deltaTime, sf::Vector2f& t_playerPos, Kinematic& t_playerKinematic) {
-		m_behaviorPattern.process(Type::pursue, m_kinematic, m_steering, t_playerPos, t_playerKinematic);
+		if (m_active) {
+			m_behaviorPattern.process(Type::pursue, m_kinematic, m_steering, t_playerPos, t_playerKinematic);
 
-		m_kinematic.m_velocity += m_steering.m_linear;
-		m_kinematic.m_pos += m_kinematic.m_velocity;
-		m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
-		m_enemySprite.setPosition(m_kinematic.m_pos);
+			m_kinematic.m_velocity += m_steering.m_linear;
+			m_kinematic.m_pos += m_kinematic.m_velocity;
+			m_kinematic.m_orientation = getNewOrientation(m_kinematic.m_orientation, m_kinematic.m_velocity);
+			m_enemySprite.setPosition(m_kinematic.m_pos);
+		}
 	}
 
 protected:

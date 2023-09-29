@@ -43,6 +43,8 @@ private:
 	Pursuer m_pursuer;
 	// Fleer m_fleer;
 
+	sf::Font m_instructionFont;
+	sf::Text m_instructionText;
 };
 
 #endif // !GAME_HPP
