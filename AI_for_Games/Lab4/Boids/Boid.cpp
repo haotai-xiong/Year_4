@@ -218,7 +218,7 @@ void Boid::flock(vector<Boid>& v)
 
 	Pvector sep, ali, coh;
 
-	if (m_clock.getElapsedTime().asSeconds() > 2.0f) // Update every 2 seconds
+	if (m_clock.getElapsedTime().asSeconds() > 0.05f) // Update every 2 seconds
 	{
 		sep = Separation(v);
 		ali = Alignment(v);
