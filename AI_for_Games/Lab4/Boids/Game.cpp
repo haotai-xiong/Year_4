@@ -18,7 +18,7 @@ Game::Game()
 
 	//Having the style of "None" gives a false-fullscreen effect for easier closing and access.
 	m_window.create(sf::VideoMode(window_width - 100, window_height - 100, desktop.bitsPerPixel), "Flocking", sf::Style::None);
-	m_window.setVerticalSyncEnabled(true);
+	m_window.setVerticalSyncEnabled(false);
 	m_exitGame = false; //when true game will exit
 
 	m_actionMessage.setFont(m_font);

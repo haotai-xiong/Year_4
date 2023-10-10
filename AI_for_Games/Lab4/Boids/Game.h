@@ -49,7 +49,7 @@ private:
 	Flock flock;
 	vector<sf::CircleShape> shapes;
 
-	int boidsMax = 750;
+	int boidsMax = 250;
 };
 
 #endif // !GAME_HPP
