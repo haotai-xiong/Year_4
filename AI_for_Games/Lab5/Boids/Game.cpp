@@ -25,16 +25,16 @@ Game::Game()
 	m_actionMessage.setString("Flocking");
 	m_actionMessage.setFillColor(sf::Color::White);
 
-	if (!m_font.loadFromFile("assets/fonts/ariblk.ttf"))
-	{
+	if (!m_font.loadFromFile("assets/fonts/ariblk.ttf")) {
 		std::cout << "failed loading ariblk.ttf font file" << std::endl;
 	}
-	else
+	else {
 		std::cout << "successfully loaded ariblk.ttf font file" << std::endl;
+	}
 
 
-	for (int i = 0; i < boidsMax; i++) //Number of boids is hardcoded for testing pusposes.
-	{
+	for (int i = 0; i < boidsMax; i++) {
+		//Number of boids is hardcoded for testing pusposes.
 		Boid b(rand() % window_width, rand() % window_height); //Starts the boid with a random position in the window.
 		//Boid b(window_width / 3, window_height / 3); //Starts all boids in the center of the screen
 		sf::CircleShape shape(8, 3); //Shape with a radius of 10 and 3 points (Making it a triangle)
@@ -71,18 +71,15 @@ Game::~Game()
 /// draw as often as possible but only updates are on time
 /// if updates run slow then don't render frames
 /// </summary>
-void Game::run()
-{
+void Game::run() {
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	const float fps{ 60.0f };
 	sf::Time timePerFrame = sf::seconds(1.0f / fps); // 60 fps
-	while (m_window.isOpen())
-	{
+	while (m_window.isOpen()) {
 		processEvents(); // as many as possible
 		timeSinceLastUpdate += clock.restart();
-		while (timeSinceLastUpdate > timePerFrame)
-		{
+		while (timeSinceLastUpdate > timePerFrame) {
 			timeSinceLastUpdate -= timePerFrame;
 			processEvents(); // at least 60 fps
 			update(timePerFrame); //60 fps
@@ -98,18 +95,17 @@ void Game::run()
 void Game::processEvents()
 {
 	sf::Event newEvent;
-	while (m_window.pollEvent(newEvent))
-	{
-		if (sf::Event::Closed == newEvent.type) // window message
-		{
+	while (m_window.pollEvent(newEvent)) {
+		if (sf::Event::Closed == newEvent.type) {
+			// window message
 			m_exitGame = true;
 		}
-		if (sf::Event::KeyPressed == newEvent.type) //user pressed a key
-		{
+		if (sf::Event::KeyPressed == newEvent.type) {
+			//user pressed a key
 			processKeys(newEvent);
 		}
-		if (sf::Event::MouseButtonPressed == newEvent.type || sf::Event::MouseButtonReleased == newEvent.type) //user pressed a mouse button
-		{
+		if (sf::Event::MouseButtonPressed == newEvent.type || sf::Event::MouseButtonReleased == newEvent.type) {
+			//user pressed a mouse button
 			processMouse(newEvent);
 		}
 	}
