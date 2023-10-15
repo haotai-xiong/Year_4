@@ -64,10 +64,10 @@ void Flock::hForming(int t_leader)
             if (i % 3 == 0) {
                 // Central line
                 targetSlot = target.location;
-                targetSlot.x -= hSpace * (3 - centralCount);
-                targetSlot.y += 5 * vSpace;
+                targetSlot.x -= hSpace * (fSize / 3 / 2 - centralCount);
+                targetSlot.y += (fSize / 3 / 2 + 1) * vSpace;
                 centralCount++;
-                if (centralCount == 8)
+                if (centralCount == fSize / 3)
                 {
                     centralCount = 0;
                 }
@@ -75,13 +75,13 @@ void Flock::hForming(int t_leader)
             else if (i % 3 == 1) {
                 // Left line
                 targetSlot = target.location;
-                targetSlot.x -= hSpace * 4;
+                targetSlot.x -= hSpace * fSize / 3 / 2;
                 targetSlot.y += (i / 3 + 1) * vSpace;
             }
             else {
                 // Right line
                 targetSlot = target.location;
-                targetSlot.x += hSpace * 4;
+                targetSlot.x += hSpace * fSize / 3 / 2;
                 targetSlot.y += (i / 3 + 1) * vSpace;
             }
 
