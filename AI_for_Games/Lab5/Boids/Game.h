@@ -43,13 +43,16 @@ private:
 	float boidsSize = 3;
 	float enemySize = 10;
 	string action = "flock";
+
+	int leader = 0;
+
 	bool close = false;
 
 	//Create flock, vector of shapes, and initialize boids
 	Flock flock;
 	vector<sf::CircleShape> shapes;
 
-	int boidsMax = 250;
+	int boidsMax = 25;
 };
 
 #endif // !GAME_HPP

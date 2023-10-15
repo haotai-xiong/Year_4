@@ -35,12 +35,12 @@ errors.
 */
 	//Accessor functions
 	int getSize();
-	Boid getBoid(int i);
+	Boid* getBoid(int i);
 	//Mutator Functions
 	void addBoid(Boid b);
 	void flocking();
 	void swarming();
-
+	void hForming(int t_leader);
 };
 
 #endif

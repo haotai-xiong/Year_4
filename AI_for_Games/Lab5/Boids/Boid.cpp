@@ -186,17 +186,39 @@ Pvector Boid::seek(Pvector& v)
 
 //Update modifies velocity, location, and resets acceleration with values that
 //are given by the three laws.
-void Boid::update()
+void Boid::update(string t_formation)
 {
-	//To make the slow down not as abrupt
-	acceleration.mulScalar(.4);
-	// Update velocity
-	velocity.addVector(acceleration);
-	// Limit speed
-	velocity.limit(maxSpeed);
-	location.addVector(velocity);
-	// Reset accelertion to 0 each cycle
-	acceleration.mulScalar(0);
+	if (t_formation == "hFormation")	// Need to treat the leader differently
+	{
+		if (isLeader)
+		{
+			std::cout << "Leader velocity = " << velocity.x << ", " << velocity.y << std::endl;
+			// Update velocity
+			location.addVector(velocity);
+		}
+		else
+		{
+			// Update velocity
+			velocity.addVector(acceleration);
+			// Limit speed
+			velocity.limit(maxSpeed*3);	// Without this higher speedup, the formation members were going too slow to cath the leader and get into formation.
+			location.addVector(velocity);
+			// Reset accelertion to 0 each cycle
+			acceleration.mulScalar(0);
+		}
+	}
+	else
+	{
+			// Update velocity
+			velocity.addVector(acceleration);
+			// Limit speed
+			velocity.limit(maxSpeed);
+			location.addVector(velocity);
+			// Reset accelertion to 0 each cycle
+			acceleration.mulScalar(0);
+	}
+
+	orientation = getNewOrientation();
 }
 
 //Run runs flock on the flock of boids for each boid.
@@ -206,7 +228,7 @@ void Boid::run(vector <Boid>& v)
 {
 	flock(v);
 	// swarm(v);
-	update();
+	update("Flock");
 	borders();
 }
 
@@ -298,6 +320,59 @@ void Boid::swarm(vector <Boid>& v)
 
 	sum.mulScalar(scaling_factor); // Scale the force so it doesn't dominate other forces
 	applyForce(sum);
-	update();
+	update("Swarm");
 	borders();
+}
+
+void Boid::accelerate(int t_power) {
+	if (t_power == 1) {//Accelerate.
+		//		acceleration.mulScalar(1.5);
+				// Update velocity
+		Pvector newVelocity = velocity;
+		// Limit speed
+		if (newVelocity.magnitude() <= maxSpeed)
+			velocity.mulScalar(1.25);
+
+	}
+	else {//Decelerate.
+		//		acceleration.mulScalar(.5);
+		velocity.mulScalar(.75);
+	}
+	std::cout << "Acceleration = " << acceleration.magnitude() << std::endl;
+	std::cout << "Velocity = " << velocity.magnitude() << std::endl;
+
+}
+
+void Boid::steer(int t_direction) {
+
+	if (t_direction == 1) {//Turn right.
+		orientation += 6.0;// / 180.0 * PI;
+	}
+	else {//Turn left.
+		orientation -= 6.0;// / 180.0 * PI;
+	}
+	//	velocity.set(cos(orientation * (PI / 180)), sin(orientation * (PI / 180)));
+	sf::Vector2f tempVelocity = getVectorFromAngle(orientation);
+	float magnitude = velocity.magnitude();
+	velocity.set(tempVelocity.x, tempVelocity.y);
+	velocity.mulScalar(magnitude);	// We need to ensure we reset the size of the vector as it was before we computed the new unit vector velocity.
+}
+
+float Boid::getNewOrientation() {
+
+	if (velocity.magnitude() > 0) {
+		float rads = atan2(velocity.y, velocity.x); // atan2 returns radians
+		float newAngle = rads * 180 / PI;           // Convert to degrees
+		return newAngle + 90;	// Becasue SFML orientation has 0 degrees pointing up, while normal trigonometry has 0 along the x axis.
+	}
+	else
+		return orientation;
+}
+
+sf::Vector2f Boid::getVectorFromAngle(float t_angle)
+{
+	float rads = (t_angle - 90) / 180.0 * PI; // Convert to radians. 
+	// First subtact 90 to move back to normal cordinate space (not SFML space) for COS and SIN to give us the corect values.
+	sf::Vector2f newVector = sf::Vector2f(cos(rads), sin(rads));
+	return newVector;
 }

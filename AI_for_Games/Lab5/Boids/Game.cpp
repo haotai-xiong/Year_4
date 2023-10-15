@@ -122,13 +122,22 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_exitGame = true;
 	}
-	else if (sf::Keyboard::Space == t_event.key.code)
+
+	if (sf::Keyboard::Up == t_event.key.code) { flock.getBoid(leader)->accelerate(1); }
+	if (sf::Keyboard::Down == t_event.key.code) { flock.getBoid(leader)->accelerate(-1); }
+	if (sf::Keyboard::Left == t_event.key.code) { flock.getBoid(leader)->steer(-1); }
+	if (sf::Keyboard::Right == t_event.key.code) { flock.getBoid(leader)->steer(1); }
+	else if (sf::Keyboard::C == t_event.key.code) {
+		action = "hformation";
+	}
+	else if (sf::Keyboard::Space == t_event.key.code) {
 		if (action == "flock") {
 			action = "swarm";
 		}
 		else {
 			action = "flock";
 		}
+	}
 }
 
 /// <summary>
@@ -179,20 +188,28 @@ void Game::update(sf::Time t_deltaTime)
 		//cout << "Boid Code " << i << " Location: (" << flock.getBoid(i).location.x << ", " << flock.getBoid(i).location.y << ")" << endl;
 
 		//Matches up the location of the shape to the boid
-		shapes[i].setPosition(flock.getBoid(i).location.x, flock.getBoid(i).location.y);
+		shapes[i].setPosition(flock.getBoid(i)->location.x, flock.getBoid(i)->location.y);
 
 		// Calculates the angle where the velocity is pointing so that the triangle turns towards it.
-		float theta;
-		theta = flock.getBoid(i).angle(flock.getBoid(i).velocity);
-		shapes[i].setRotation(theta);
-
+		shapes[i].setRotation(flock.getBoid(i)->orientation);
 	}
 
 	//Applies the three rules to each boid in the flock and changes them accordingly.
 	if (action == "flock")
+	{
 		flock.flocking();
+		shapes[leader].setFillColor(sf::Color::Green);
+	}
+	else if (action == "hformation")
+	{
+		flock.hForming(leader);
+		shapes[leader].setFillColor(sf::Color::Red);
+	}
 	else
+	{
 		flock.swarming();
+		shapes[leader].setFillColor(sf::Color::Green);
+	}
 
 	if (m_exitGame)
 	{
@@ -201,6 +218,8 @@ void Game::update(sf::Time t_deltaTime)
 	if (m_actionMessage.getString() != action)
 		m_actionMessage.setString(action);
 
+	if (action == "hformation")
+		m_actionMessage.setString(m_actionMessage.getString() + " - Leader: " + to_string(flock.getBoid(leader)->orientation));
 }
 
 /// <summary>

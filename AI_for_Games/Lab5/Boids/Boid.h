@@ -31,6 +31,7 @@ class Boid
 {
 public:
 	bool predator;
+	bool isLeader = false;
 	Pvector location;
 	Pvector velocity;
 	Pvector acceleration;
@@ -38,21 +39,23 @@ public:
 	float maxForce;
 	int neighbourDistance = 50;
 	sf::Clock m_clock;
+	float orientation;
 
 	Boid() {}
 	Boid(float x, float y)
 	{
 		acceleration = Pvector(0, 0);
-		velocity = Pvector(rand()%3-2, rand()%3-2); // Allows for range of -2 -> 2
+		velocity = Pvector(rand() % 3 - 2, rand() % 3 - 2); // Allows for range of -2 -> 2
 		location = Pvector(x, y);
 		maxSpeed = 3.5;
 		maxForce = 0.5;
 	}
+
 	Boid(float x, float y, bool predCheck) 
 	{
 		predator = predCheck;
 		if (predCheck == true) {
-			maxSpeed = 7.5;
+			maxSpeed = 10;
 			maxForce = 0.5;
 			velocity = Pvector(rand()%3-1, rand()%3-1);
 		} else {
@@ -80,11 +83,17 @@ Destructors are commented out for now. g++ throws errors if they are included.
 	//Functions involving SFML and visualisation linking
 	Pvector seek(Pvector& v);
 	void run(vector <Boid>& v);
-	void update();
+	void update(string t_formation);
 	void flock(vector <Boid>& v);
 	void borders();
 	float angle(Pvector& v);
 	void swarm(vector <Boid>& v);
+
+	void accelerate(int t_power);
+	void steer(int t_direction);
+
+	float getNewOrientation();
+	sf::Vector2f getVectorFromAngle(float t_angle);
 };
 
 #endif
