@@ -1,0 +1,31 @@
+{
+  "summary": {
+    "generatedon": "2023-10-02T10:39:43Z",
+    "parser": "MultiReportParser (4x OpenCoverParser)",
+    "assemblies": 2,
+    "classes": 7,
+    "files": 14,
+    "coveredlines": 144,
+    "uncoveredlines": 562,
+    "coverablelines": 706,
+    "totallines": 797,
+    "linecoverage": 20.3,
+    "coveredbranches": 0,
+    "totalbranches": 0,
+    "coveredmethods": 31,
+    "totalmethods": 116,
+    "methodcoverage": 26.7
+ },
+  "coverage": {
+    "assemblies": [
+      { "name": "GameAssembly", "classes": 6, "coverage": 22.3, "coveredlines": 115, "coverablelines": 515, "totallines": 585, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 27.9, "coveredmethods": 24, "totalmethods": 86, "classesinassembly": [
+        { "name": "Asteroid", "coverage": 8.3, "coveredlines": 4, "coverablelines": 48, "totallines": 66, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 20, "coveredmethods": 2, "totalmethods": 10 },
+        { "name": "AutoDestroyParticleSystem", "coverage": 0, "coveredlines": 0, "coverablelines": 18, "totallines": 19, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 4 },
+        { "name": "Game", "coverage": 31.1, "coveredlines": 47, "coverablelines": 151, "totallines": 148, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 33.3, "coveredmethods": 8, "totalmethods": 24 },
+        { "name": "Laser", "coverage": 0, "coveredlines": 0, "coverablelines": 34, "totallines": 57, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 4 },
+        { "name": "Ship", "coverage": 25.9, "coveredlines": 42, "coverablelines": 162, "totallines": 164, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 34.6, "coveredmethods": 9, "totalmethods": 26 },
+        { "name": "Spawner", "coverage": 21.5, "coveredlines": 22, "coverablelines": 102, "totallines": 131, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 27.7, "coveredmethods": 5, "totalmethods": 18 } ] },
+      { "name": "Tests", "classes": 1, "coverage": 15.1, "coveredlines": 29, "coverablelines": 191, "totallines": 212, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 23.3, "coveredmethods": 7, "totalmethods": 30, "classesinassembly": [
+        { "name": "TestSuite", "coverage": 15.1, "coveredlines": 29, "coverablelines": 191, "totallines": 212, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 23.3, "coveredmethods": 7, "totalmethods": 30 } ] } ]
+  }
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<coverage version="1.0" date="2023-09-25_12-23-04" tag="">
+  <assembly name="GameAssembly">
+    <class name="Asteroid" coveredlines="33" coverablelines="33" totallines="62" coveredbranches="0" totalbranches="0" />
+    <class name="Game" coveredlines="70" coverablelines="70" totallines="97" coveredbranches="0" totalbranches="0" />
+    <class name="Laser" coveredlines="22" coverablelines="26" totallines="56" coveredbranches="0" totalbranches="0" />
+    <class name="Ship" coveredlines="66" coverablelines="113" totallines="132" coveredbranches="0" totalbranches="0" />
+    <class name="Spawner" coveredlines="70" coverablelines="79" totallines="123" coveredbranches="0" totalbranches="0" />
+  </assembly>
+  <assembly name="Tests">
+    <class name="TestSuite" coveredlines="130" coverablelines="130" totallines="149" coveredbranches="0" totalbranches="0" />
+  </assembly>
+</coverage>
