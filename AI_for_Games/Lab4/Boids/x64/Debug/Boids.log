@@ -1,42 +1,33 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Boids.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Boids.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Game.cpp
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(46,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(46,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(57,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(57,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(61,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(61,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(38,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(38,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(44,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(44,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(148,36): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Boid.h(46,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Boid.h(46,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Boid.h(57,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Boid.h(57,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Boid.h(61,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Boid.h(61,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(38,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(38,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(44,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(44,21): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(148,36): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(148,21): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(148,21): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(152,47): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(152,47): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=int
           ]
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(152,32): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\Boids\Game.cpp(152,32): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=int
           ]
-  main.cpp
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(46,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(46,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(57,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(57,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(61,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\Boid.h(61,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\Boids\main.cpp(37,22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Generating Code...
-  Boids.vcxproj -> C:\Users\labuser\Desktop\Year_4\AI_for_Games\Lab4\x64\Debug\Flock.exe
+  Boids.vcxproj -> D:\ITCarlow-Haotai_Xiong\Year_4\AI_for_Games\Lab4\x64\Debug\Flock.exe

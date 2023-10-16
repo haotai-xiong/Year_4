@@ -58,7 +58,7 @@ protected:
 		static sf::Clock seekClock;
 		static float wanderAngle = rand() % 60;
 
-		if (wanderClock.getElapsedTime().asSeconds() >= 0.2f) {  
+		if (wanderClock.getElapsedTime().asSeconds() >= 0.2f) {
 			float randomRotation = (static_cast<float>(rand()) / RAND_MAX) * 60.0f - 30.0f;
 			wanderAngle += randomRotation;
 			t_kinematic.m_velocity = sf::Vector2f(std::sin(wanderAngle * PI / 180.0f),
@@ -151,5 +151,5 @@ protected:
 	}
 };
 
-#endif 
+#endif
 // !BEHAVIOR
