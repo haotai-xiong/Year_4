@@ -2,6 +2,7 @@
 
 Tile::Tile(int t_x, int t_y, TileType t_type) : m_x(t_x), m_y(t_y), m_type(t_type)
 {
+	m_rect.setSize(sf::Vector2f(TILE_WIDTH, TILE_HEIGHT));
 }
 
 int Tile::getX() const
