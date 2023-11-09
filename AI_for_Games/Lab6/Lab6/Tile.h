@@ -1,19 +1,7 @@
-#ifndef TILE_HPP
-#define TILE_HPP
+#ifndef TILE_H
+#define TILE_H
 
-#include <SFML/Graphics.hpp>
-#include <unordered_map>
-#include "Globals.h"
-
-enum class TileType {
-	Traversable,
-	NonTraversable
-};
-
-std::unordered_map<TileType, sf::Color> tileTypeToColor = {
-	{TileType::Traversable, sf::Color::White},
-	{TileType::NonTraversable, sf::Color::Black}
-};
+#include "TileType.h"
 
 class Tile {
 public:
@@ -21,12 +9,28 @@ public:
 	int getX() const;
 	int getY() const;
 	TileType getType() const;
+	sf::RectangleShape& getRect();
+	int& getDistance();
 	void setType(TileType t_type);
+	void render(sf::RenderWindow& t_window);
+
+	int calculateTileDistance(int t_x, int t_y);
+	void setDistance(int t_distance);
+	sf::Color getColorBasedOnDistance();
+	void setColor(sf::Color t_color);
+
+	void setFlowVector(sf::Vector2f t_flowVector);
+	sf::Vector2f getFlowVector() const;
+	void drawFlowVector(sf::RenderWindow& window);
 
 private:
-	int m_x, m_y;
+	int m_x, m_y; // X & Y index
 	TileType m_type;
 	sf::RectangleShape m_rect;
+	int m_distance;
+	sf::Text m_distanceText;
+	sf::Color m_color;
+	sf::Vector2f m_flowVector;
 };
 
 #endif

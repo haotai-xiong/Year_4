@@ -1,5 +1,5 @@
-#ifndef GAME_HPP
-#define GAME_HPP
+#ifndef GAME_H
+#define GAME_H
 
 #include "TileMap.h"
 
@@ -23,6 +23,7 @@ private:
 	sf::RenderWindow m_window; // main SFML window
 	bool m_exitGame; // control exiting game
 
+	TileMap m_testMap;
 };
 
 #endif // !GAME_HPP
