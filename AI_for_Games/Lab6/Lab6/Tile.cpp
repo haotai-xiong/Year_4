@@ -1,6 +1,6 @@
 #include "Tile.h"
 
-Tile::Tile(int t_x, int t_y, TileType t_type) : m_x(t_x), m_y(t_y), m_type(t_type), m_color(tileTypeToColor[this->m_type]) {
+Tile::Tile(sf::Vector2i t_pos, TileType t_type) : m_pos(t_pos), m_type(t_type), m_originColor(tileTypeToColor[this->m_type]) {
 	m_distance = 0;
 
 	Ariblk.loadFromFile("ASSETS/FONTS/ariblk.ttf");
@@ -12,18 +12,10 @@ Tile::Tile(int t_x, int t_y, TileType t_type) : m_x(t_x), m_y(t_y), m_type(t_typ
 	m_rect.setOutlineColor(sf::Color::Black);
 	m_rect.setOutlineThickness(1.5f);
 
-	m_rect.setPosition(t_x * TILE_WIDTH, t_y * TILE_HEIGHT);
-	m_distanceText.setPosition((t_x + 0.15f) * TILE_WIDTH, (t_y + 0.15f) * TILE_HEIGHT);
+	m_rect.setPosition(m_pos.x * TILE_WIDTH, m_pos.y * TILE_HEIGHT);
+	m_distanceText.setPosition((m_pos.x + 0.15f) * TILE_WIDTH, (m_pos.y + 0.15f) * TILE_HEIGHT);
 
-	m_rect.setFillColor(m_color);
-}
-
-int Tile::getX() const {
-	return m_x;
-}
-
-int Tile::getY() const {
-	return m_y;
+	m_rect.setFillColor(m_originColor);
 }
 
 TileType Tile::getType() const {
@@ -44,7 +36,7 @@ void Tile::render(sf::RenderWindow& t_window) {
 
 // calculating how many tiles away from any t_tile
 int Tile::calculateTileDistance(int t_x, int t_y) {
-	return std::max(std::abs(t_x - m_x), std::abs(t_y - m_y));
+	return std::max(std::abs(t_x - m_pos.x), std::abs(t_y - m_pos.y));
 }
 
 void Tile::setDistance(int t_distance) {

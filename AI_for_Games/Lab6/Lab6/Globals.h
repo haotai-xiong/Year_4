@@ -8,6 +8,7 @@
 #include <vector>
 #include <queue>
 #include <limits>
+#include <stack>
 
 extern int SCREEN_WIDTH;
 extern int SCREEN_HEIGHT;
