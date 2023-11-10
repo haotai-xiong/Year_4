@@ -53,7 +53,7 @@ int& Tile::getDistance() {
 
 sf::Color Tile::getColorBasedOnDistance() {
 	sf::Color currentColor = m_rect.getFillColor();
-	int newRedIntensity = std::min(currentColor.r + m_distance * 4, 255);
+	int newRedIntensity = std::min(currentColor.r + m_distance * 5, 255);
 	sf::Color newColor(newRedIntensity, currentColor.g, currentColor.b);
 
 	return newColor;

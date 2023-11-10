@@ -76,7 +76,8 @@ void TileMap::createFlowField() {
 }
 
 void TileMap::drawPath(sf::Vector2i t_pos) {
-	if (t_pos.x < 0 || t_pos.x >= width_Num || t_pos.y < 0 || t_pos.y >= height_Num) {
+	if (t_pos.x < 0 || t_pos.x >= width_Num || t_pos.y < 0 || t_pos.y >= height_Num
+		|| TileType::Destination == tiles[t_pos.y][t_pos.x].getType()) {
 		return;
 	}
 
@@ -85,9 +86,10 @@ void TileMap::drawPath(sf::Vector2i t_pos) {
 		tiles[t_pos.y][t_pos.x].getRect().setFillColor(sf::Color::Yellow);
 		sf::Vector2i tempFlowVec = static_cast<sf::Vector2i>(tiles[t_pos.y][t_pos.x].getFlowVector());
 		sf::Vector2i nextPos = t_pos + tempFlowVec;
-		//drawPath(nextPos);
+		drawPath(nextPos);
 	}
 	*/
+
 	sf::Vector2i nextPos;
 
 	sf::Vector2i tempFlowVec = static_cast<sf::Vector2i>(tiles[t_pos.y][t_pos.x].getFlowVector());
@@ -95,13 +97,15 @@ void TileMap::drawPath(sf::Vector2i t_pos) {
 
 	for (int i = 0; i < 100; i++)
 	{
+		if (isNeighbourDestination(t_pos))
+		{
+			break;
+		}
+
 		if (TileType::Destination != tiles[nextPos.y][nextPos.x].getType()) {
 			tiles[nextPos.y][nextPos.x].getRect().setFillColor(sf::Color::Yellow);
 			sf::Vector2i tempFlowVec = static_cast<sf::Vector2i>(tiles[nextPos.y][nextPos.x].getFlowVector());
 			nextPos += tempFlowVec;
-		}
-		else {
-			break;
 		}
 	}
 }
@@ -131,4 +135,14 @@ void TileMap::specialTileSetup() {
 bool TileMap::isValid(const sf::Vector2i& t_pos) {
 	return t_pos.x >= 0 && t_pos.x < width_Num && t_pos.y >= 0 && t_pos.y < height_Num
 		&& TileType::Traversable == tiles[t_pos.y][t_pos.x].getType();
+}
+
+bool TileMap::isNeighbourDestination(sf::Vector2i t_pos) {
+	for (const auto& dir : directions) {
+		sf::Vector2i neighbourPos = t_pos + dir;
+		if (TileType::Destination == tiles[neighbourPos.y][neighbourPos.x].getType()) {
+			return true;
+		}
+	}
+	return false;
 }

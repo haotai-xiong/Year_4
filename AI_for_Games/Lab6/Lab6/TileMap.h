@@ -16,6 +16,7 @@ public:
 	void createFlowField();
 	void drawPath(sf::Vector2i t_pos);
 	bool isValid(const sf::Vector2i& t_pos);
+	bool isNeighbourDestination(sf::Vector2i current_pos);
 
 private:
 	std::vector<std::vector<Tile>> tiles;
