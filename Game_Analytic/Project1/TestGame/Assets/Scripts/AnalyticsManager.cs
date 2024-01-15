@@ -41,7 +41,6 @@ public class AnalyticsManager : MonoBehaviour
 
             yield return request.SendWebRequest();
 
-
             if (!request.isNetworkError && request.responseCode == (int)HttpStatusCode.OK)
             {
                 Debug.Log("Data successfully sent to the server");

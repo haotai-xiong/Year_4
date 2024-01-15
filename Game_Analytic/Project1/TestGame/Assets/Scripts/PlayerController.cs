@@ -21,15 +21,18 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // left click
+        if (!GameManager.Instance.gameFinished)
         {
-            Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            direction = (targetPosition - (Vector2)transform.position).normalized;
-            playerData.player_clicks += 1;
-        }
-        Move();
+            if (Input.GetMouseButtonDown(0)) // left click
+            {
+                Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                direction = (targetPosition - (Vector2)transform.position).normalized;
+                playerData.player_clicks += 1;
+            }
+            Move();
 
-        timer += Time.deltaTime;
+            timer += Time.deltaTime;
+        }
     }
 
     [System.Obsolete]
@@ -37,7 +40,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Colliding");
+            GameManager.Instance.gameFinished = true;
             playerData.collision_count += 1;
             playerData.collision_happended_time = timer.ToString("0.00") + " seconds";
             string jsonData = JsonUtility.ToJson(playerData);

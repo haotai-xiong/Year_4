@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public float changeTime = 2.0f;
+    public float changeTime = 1.0f;
     private float timer;
-    public float moveSpeed = 3.0f;
+    public float moveSpeed = 10.0f;
 
     private Vector2 randomDirection;
     private Vector3 currentPos;
@@ -15,18 +15,22 @@ public class EnemyController : MonoBehaviour
         timer = changeTime;
         currentPos = transform.position;
         collider = GetComponent<Collider2D>();
+        GetRandomDirection();
     }
 
     void Update()
     {
-        timer -= Time.deltaTime;
-
-        if (timer <= 0)
+        if (!GameManager.Instance.gameFinished)
         {
-            GetRandomDirection();
-            timer = changeTime;
+            timer -= Time.deltaTime;
+
+            if (timer <= 0)
+            {
+                GetRandomDirection();
+                timer = changeTime;
+            }
+            Move();
         }
-        Move();
     }
 
     private void GetRandomDirection()

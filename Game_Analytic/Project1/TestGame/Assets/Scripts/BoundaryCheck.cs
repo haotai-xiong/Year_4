@@ -30,7 +30,7 @@ public class BoundaryCheck : MonoBehaviour
 
     void Start()
     {
-        boundaryBox = GetComponent<BoxCollider2D>();
+        boundaryBox = boundaryGameObject.GetComponent<BoxCollider2D>();
 
         MinX = boundaryBox.bounds.min.x;
         MaxX = boundaryBox.bounds.max.x;
