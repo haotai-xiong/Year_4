@@ -1,0 +1,6 @@
+Flask
+Flask_Cors
+requests
+csv
+pandas
+matplotlib
