@@ -114,6 +114,7 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+
     util.raiseNotDefined()
     
 def uniformCostSearch(problem):
