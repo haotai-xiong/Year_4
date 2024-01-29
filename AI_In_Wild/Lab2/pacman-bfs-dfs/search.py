@@ -113,30 +113,28 @@ def depthFirstSearch(problem):
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    from util import Queue  # Make sure you have a Queue implementation available
-
     print("Start:", problem.getStartState())
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
 
-    queue = Queue()
-    queue.push((problem.getStartState(), []))  # Push the starting state and an empty path
+    queue = util.Queue()
+    queue.push((problem.getStartState(), []))
     print("Start queue:", queue.list)
 
-    visited = set()  # It's more efficient to use a set for visited
+    visited = set()
 
     while not queue.isEmpty():
         currentState, steps = queue.pop()
         if currentState not in visited:
             if problem.isGoalState(currentState):
-                return steps  # Return the path to the goal state
+                return steps
 
-            visited.add(currentState)  # Mark the current state as visited
+            visited.add(currentState)
             for state, action, cost in problem.getSuccessors(currentState):
-                if state not in visited:  # Only add states that haven't been visited
-                    queue.push((state, steps + [action]))  # Enqueue successors with the path to reach them
+                if state not in visited:
+                    queue.push((state, steps + [action]))
 
-    return []  # Return an empty list if no path is found to the goal
+    return []
 
     
 def uniformCostSearch(problem):
