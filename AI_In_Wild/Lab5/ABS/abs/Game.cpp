@@ -217,13 +217,13 @@ void Game::setupDroids()
 	d1->setBrain(emptyBrain);
 	d1->setColour(sf::Color::Yellow);
 	
-	//// Another example Droid with a simple MoveTo Behaviour starting at a random position
-	//srand(time(0));
-	//Droid* d2 = new Droid("D2", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
-	//Routine* moveTo2 = new MoveTo(15, 15, gridWorld);
-	//d2->setBehaviour(moveTo2);
-	//d2->setBrain(emptyBrain);
-	//d2->setColour(sf::Color::Green);
+	// Another example Droid with a simple MoveTo Behaviour starting at a random position
+	srand(time(0));
+	Droid* d2 = new Droid("D2", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
+	Routine* moveTo2 = new MoveTo(15, 15, gridWorld);
+	d2->setBehaviour(moveTo2);
+	d2->setBrain(emptyBrain);
+	d2->setColour(sf::Color::Green);
 
 	//// Example Droid with a simple Wander Behaviour
 	//Droid* d3 = new Droid("D3", 20, 3, 1000, 0, 3, gridWorld);
@@ -232,12 +232,12 @@ void Game::setupDroids()
 	//d3->setBrain(emptyBrain);
 	//d3->setColour(sf::Color::Magenta);
 
-	//// Example Droid with a Hide Behaviour
-	//Droid* d4 = new Droid("D4", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
-	//Routine* hide4 = new Hide(1, 2, gridWorld);	// Hide behind Green from Yellow
-	//d4->setBehaviour(hide4);
-	//d4->setBrain(emptyBrain);
-	//d4->setColour(sf::Color::Cyan);
+	// Example Droid with a Hide Behaviour
+	Droid* d4 = new Droid("D4", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
+	Routine* hide4 = new Hide(1, 2, gridWorld);	// Hide behind Green from Yellow
+	d4->setBehaviour(hide4);
+	d4->setBrain(emptyBrain);
+	d4->setColour(sf::Color::Cyan);
 
 	//// Example Droid with a Protect Behaviour
 	//// Protect Droid 1 (yellow) from Droid 2 (Green)
@@ -272,9 +272,9 @@ void Game::setupDroids()
 	//d7->setColour(sf::Color(39,215,205));
 
 	m_droids.push_back(d1);
-	//m_droids.push_back(d2);
+	m_droids.push_back(d2);
 	//m_droids.push_back(d3);
-	//m_droids.push_back(d4);
+	m_droids.push_back(d4);
 	//m_droids.push_back(d5);
     //m_droids.push_back(d6);
 	//m_droids.push_back(d7);
