@@ -165,6 +165,7 @@
     <ClInclude Include="IsDroidInRange.h" />
     <ClInclude Include="IsHealthLow.h" />
     <ClInclude Include="MoveAway.h" />
+    <ClInclude Include="Protect.h" />
     <ClInclude Include="Repeat.h" />
     <ClInclude Include="MoveTo.h" />
     <ClInclude Include="Node.h" />

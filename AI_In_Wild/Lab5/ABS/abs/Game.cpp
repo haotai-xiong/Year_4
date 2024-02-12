@@ -12,6 +12,7 @@
 #include "GetHealth.h"
 #include "IsHealthLow.h"
 #include "Hide.h"
+#include "Protect.h"
 #include <iostream>
 #include <list>
 
@@ -232,20 +233,20 @@ void Game::setupDroids()
 	//d3->setBrain(emptyBrain);
 	//d3->setColour(sf::Color::Magenta);
 
-	// Example Droid with a Hide Behaviour
-	Droid* d4 = new Droid("D4", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
-	Routine* hide4 = new Hide(1, 2, gridWorld);	// Hide behind Green from Yellow
-	d4->setBehaviour(hide4);
-	d4->setBrain(emptyBrain);
-	d4->setColour(sf::Color::Cyan);
+	//// Example Droid with a Hide Behaviour
+	//Droid* d4 = new Droid("D4", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
+	//Routine* hide4 = new Hide(1, 2, gridWorld);	// Hide behind Green from Yellow
+	//d4->setBehaviour(hide4);
+	//d4->setBrain(emptyBrain);
+	//d4->setColour(sf::Color::Cyan);
 
-	//// Example Droid with a Protect Behaviour
-	//// Protect Droid 1 (yellow) from Droid 2 (Green)
-	//Droid* d5 = new Droid("D5", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
-	//Routine* protect1 = new Protect(1, 3, gridWorld); // Protect Yellow from Magenta
-	//d5->setBehaviour(protect1);
-	//d5->setBrain(emptyBrain);
-	//d5->setColour(sf::Color::Blue);
+	// Example Droid with a Protect Behaviour
+	// Protect Droid 1 (yellow) from Droid 2 (Green)
+	Droid* d5 = new Droid("D5", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
+	Routine* protect1 = new Protect(1, 2, gridWorld); // Protect Yellow from Green
+	d5->setBehaviour(protect1);
+	d5->setBrain(emptyBrain);
+	d5->setColour(sf::Color::Blue);
 
 	//// Example Droid with a hide Behaviour using 2 random Droids
 	//Droid* d6 = new Droid("D6", 7, 3, 1000, 0, 3, gridWorld);
@@ -274,8 +275,8 @@ void Game::setupDroids()
 	m_droids.push_back(d1);
 	m_droids.push_back(d2);
 	//m_droids.push_back(d3);
-	m_droids.push_back(d4);
-	//m_droids.push_back(d5);
+	//m_droids.push_back(d4);
+	m_droids.push_back(d5);
     //m_droids.push_back(d6);
 	//m_droids.push_back(d7);
 	gridWorld.m_gridDroids = m_droids;	//So we can access them when inside the behaviours.

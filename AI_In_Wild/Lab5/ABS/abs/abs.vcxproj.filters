@@ -89,5 +89,8 @@
     <ClInclude Include="Hide.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Protect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
