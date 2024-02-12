@@ -155,6 +155,7 @@
     <ClCompile Include="Node.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arrive.h" />
     <ClInclude Include="Hide.h" />
     <ClInclude Include="CheckForAlarms.h" />
     <ClInclude Include="GetHealth.h" />

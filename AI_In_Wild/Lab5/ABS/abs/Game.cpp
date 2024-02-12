@@ -13,6 +13,7 @@
 #include "IsHealthLow.h"
 #include "Hide.h"
 #include "Protect.h"
+#include "Arrive.h"
 #include <iostream>
 #include <list>
 
@@ -242,11 +243,11 @@ void Game::setupDroids()
 
 	// Example Droid with a Protect Behaviour
 	// Protect Droid 1 (yellow) from Droid 2 (Green)
-	Droid* d5 = new Droid("D5", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
-	Routine* protect1 = new Protect(1, 2, gridWorld); // Protect Yellow from Green
-	d5->setBehaviour(protect1);
-	d5->setBrain(emptyBrain);
-	d5->setColour(sf::Color::Blue);
+	//Droid* d5 = new Droid("D5", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
+	//Routine* protect1 = new Protect(1, 2, gridWorld); // Protect Yellow from Green
+	//d5->setBehaviour(protect1);
+	//d5->setBrain(emptyBrain);
+	//d5->setColour(sf::Color::Blue);
 
 	//// Example Droid with a hide Behaviour using 2 random Droids
 	//Droid* d6 = new Droid("D6", 7, 3, 1000, 0, 3, gridWorld);
@@ -272,17 +273,25 @@ void Game::setupDroids()
 	//d7->setBrain(new CheckForAlarms()); //The Brain routine gets executed first.
 	//d7->setColour(sf::Color(39,215,205));
 
+	// Example Droid with a Arrive Behaviour
+	// Arrive to Droid 1 (yellow)
+	Droid* d8 = new Droid("D8", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
+	Routine* arrive1 = new Arrive(1, gridWorld); // Follow Yellow
+	d8->setBehaviour(arrive1);
+	d8->setBrain(emptyBrain);
+	d8->setColour(sf::Color::Magenta);
+
 	m_droids.push_back(d1);
 	m_droids.push_back(d2);
 	//m_droids.push_back(d3);
 	//m_droids.push_back(d4);
-	m_droids.push_back(d5);
+	//m_droids.push_back(d5);
     //m_droids.push_back(d6);
 	//m_droids.push_back(d7);
+	m_droids.push_back(d8);
 	gridWorld.m_gridDroids = m_droids;	//So we can access them when inside the behaviours.
 
 	int x = gridWorld.getGridCellX(sf::Vector2i(400, 300));
-
 }
 
 /// <summary>
