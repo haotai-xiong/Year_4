@@ -243,11 +243,11 @@ void Game::setupDroids()
 
 	// Example Droid with a Protect Behaviour
 	// Protect Droid 1 (yellow) from Droid 2 (Green)
-	//Droid* d5 = new Droid("D5", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
-	//Routine* protect1 = new Protect(1, 2, gridWorld); // Protect Yellow from Green
-	//d5->setBehaviour(protect1);
-	//d5->setBrain(emptyBrain);
-	//d5->setColour(sf::Color::Blue);
+	Droid* d5 = new Droid("D5", (rand() % (int)gridWorld.gridSize) + 1, (rand() % (int)gridWorld.gridSize) + 1, 1000, 0, 3, gridWorld);
+	Routine* protect1 = new Protect(1, 2, gridWorld); // Protect Yellow from Green
+	d5->setBehaviour(protect1);
+	d5->setBrain(emptyBrain);
+	d5->setColour(sf::Color::Blue);
 
 	//// Example Droid with a hide Behaviour using 2 random Droids
 	//Droid* d6 = new Droid("D6", 7, 3, 1000, 0, 3, gridWorld);
@@ -285,7 +285,7 @@ void Game::setupDroids()
 	m_droids.push_back(d2);
 	//m_droids.push_back(d3);
 	//m_droids.push_back(d4);
-	//m_droids.push_back(d5);
+	m_droids.push_back(d5);
     //m_droids.push_back(d6);
 	//m_droids.push_back(d7);
 	m_droids.push_back(d8);
